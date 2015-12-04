@@ -162,8 +162,6 @@ namespace JigsawPuzzleEffect
             Amount5 = ColorBgra.FromOpaqueInt32(newToken.GetProperty<Int32Property>(PropertyNames.Amount5).Value);
             Amount6 = newToken.GetProperty<DoubleVectorProperty>(PropertyNames.Amount6).Value;
 
-            base.OnSetRenderInfo(newToken, dstArgs, srcArgs);
-
 
             Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
 
@@ -293,6 +291,9 @@ namespace JigsawPuzzleEffect
 
             puzzleSurface = Surface.CopyFromBitmap(puzzleBitmap);
             puzzleBitmap.Dispose();
+
+
+            base.OnSetRenderInfo(newToken, dstArgs, srcArgs);
         }
 
         protected override void OnRender(Rectangle[] renderRects, int startIndex, int length)
