@@ -105,7 +105,7 @@ namespace JigsawPuzzleEffect
         protected override PropertyCollection OnCreatePropertyCollection()
         {
             List<Property> props = new List<Property>();
-            props.Add(new DoubleProperty(PropertyNames.Amount1, 1, 0.2, 5));
+            props.Add(new DoubleProperty(PropertyNames.Amount1, 1, 0.2, 10));
             props.Add(new Int32Property(PropertyNames.Amount2, 2, 1, 10));
             props.Add(StaticListChoiceProperty.CreateForEnum<Amount3Options>(PropertyNames.Amount3, 0, false));
             props.Add(new BooleanProperty(PropertyNames.Amount4, true));
@@ -138,7 +138,7 @@ namespace JigsawPuzzleEffect
             configUI.SetPropertyControlValue(PropertyNames.Amount4, ControlInfoPropertyNames.Description, "Transparent");
             configUI.SetPropertyControlValue(PropertyNames.Amount5, ControlInfoPropertyNames.DisplayName, string.Empty);
             configUI.SetPropertyControlType(PropertyNames.Amount5, PropertyControlType.ColorWheel);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.DisplayName, "Offset");
+            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.DisplayName, "Position");
             configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.SliderSmallChangeX, 0.05);
             configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.SliderLargeChangeX, 0.25);
             configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.UpDownIncrementX, 0.001);
