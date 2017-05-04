@@ -29,7 +29,12 @@ namespace JigsawPuzzleEffect
         {
         }
 
+        private enum Apex
         {
+            Up,
+            Right,
+            Down,
+            Left
         }
 
         public enum PropertyNames
@@ -168,11 +173,11 @@ namespace JigsawPuzzleEffect
                     {
                         if (i2 % 2 != 0) // upper apex on odds
                         {
-                            curvePoints = getCurvePoints(0, i, i2); // upper apex
+                            curvePoints = getCurvePoints(Apex.Up, i, i2); // upper apex
                         }
                         else
                         {
-                            curvePoints = getCurvePoints(2, i, i2); // lower apex
+                            curvePoints = getCurvePoints(Apex.Down, i, i2); // lower apex
                         }
 
                         puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
@@ -184,11 +189,11 @@ namespace JigsawPuzzleEffect
                     {
                         if (i2 % 2 == 0) // upper apex on evens
                         {
-                            curvePoints = getCurvePoints(0, i, i2); // upper apex
+                            curvePoints = getCurvePoints(Apex.Up, i, i2); // upper apex
                         }
                         else
                         {
-                            curvePoints = getCurvePoints(2, i, i2); // lower apex
+                            curvePoints = getCurvePoints(Apex.Down, i, i2); // lower apex
                         }
 
                         puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
@@ -207,11 +212,11 @@ namespace JigsawPuzzleEffect
                     {
                         if (i2 % 2 != 0) // right apex on odds
                         {
-                            curvePoints = getCurvePoints(1, i, i2); // right apex
+                            curvePoints = getCurvePoints(Apex.Right, i, i2); // right apex
                         }
                         else
                         {
-                            curvePoints = getCurvePoints(3, i, i2); // left apex
+                            curvePoints = getCurvePoints(Apex.Left, i, i2); // left apex
                         }
 
                         puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
@@ -223,11 +228,11 @@ namespace JigsawPuzzleEffect
                     {
                         if (i2 % 2 == 0) // right apex on evens
                         {
-                            curvePoints = getCurvePoints(1, i, i2); // right apex
+                            curvePoints = getCurvePoints(Apex.Right, i, i2); // right apex
                         }
                         else
                         {
-                            curvePoints = getCurvePoints(3, i, i2); // left apex
+                            curvePoints = getCurvePoints(Apex.Left, i, i2); // left apex
                         }
 
                         puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
@@ -255,11 +260,11 @@ namespace JigsawPuzzleEffect
         }
 
         // Define Curve points
-        PointF[] getCurvePoints(int apex, int i, int i2)
+        PointF[] getCurvePoints(Apex apexLocation, int i, int i2)
         {
             PointF point0, point1, point2, point3, point4, point5, point6;
 
-            switch (apex)
+            switch ((int)apexLocation)
             {
                 case 0: // upper apex
                     point0 = new PointF((float)(0 * Amount1 + gridScale * i2 + xOffset), (float)(100 * Amount1 + gridScale * i + yOffset));
