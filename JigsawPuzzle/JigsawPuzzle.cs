@@ -262,59 +262,58 @@ namespace JigsawPuzzleEffect
         // Define Curve points
         PointF[] getCurvePoints(Apex apexLocation, int i, int i2)
         {
-            PointF point0, point1, point2, point3, point4, point5, point6;
+            PointF[] points = new PointF[7];
 
             switch ((int)apexLocation)
             {
                 case 0: // upper apex
-                    point0 = new PointF((float)(0 * Amount1 + gridScale * i2 + xOffset), (float)(100 * Amount1 + gridScale * i + yOffset));
-                    point1 = new PointF((float)(40 * Amount1 + gridScale * i2 + xOffset), (float)(101 * Amount1 + gridScale * i + yOffset));
-                    point2 = new PointF((float)(36 * Amount1 + gridScale * i2 + xOffset), (float)(79 * Amount1 + gridScale * i + yOffset));
-                    point3 = new PointF((float)(50 * Amount1 + gridScale * i2 + xOffset), (float)(67 * Amount1 + gridScale * i + yOffset));
-                    point4 = new PointF((float)(64 * Amount1 + gridScale * i2 + xOffset), (float)(79 * Amount1 + gridScale * i + yOffset));
-                    point5 = new PointF((float)(60 * Amount1 + gridScale * i2 + xOffset), (float)(101 * Amount1 + gridScale * i + yOffset));
-                    point6 = new PointF((float)(100 * Amount1 + gridScale * i2 + xOffset), (float)(100 * Amount1 + gridScale * i + yOffset));
+                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
+                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + offset.X), (float)(101 * Amount1 + gridScale * i + offset.Y));
+                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + offset.X), (float)(79 * Amount1 + gridScale * i + offset.Y));
+                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + offset.X), (float)(67 * Amount1 + gridScale * i + offset.Y));
+                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + offset.X), (float)(79 * Amount1 + gridScale * i + offset.Y));
+                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + offset.X), (float)(101 * Amount1 + gridScale * i + offset.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
                     break;
                 case 1: // right apex
-                    point0 = new PointF((float)(100 * Amount1 + gridScale * i + xOffset), (float)(0 * Amount1 + gridScale * i2 + yOffset));
-                    point1 = new PointF((float)(99 * Amount1 + gridScale * i + xOffset), (float)(40 * Amount1 + gridScale * i2 + yOffset));
-                    point2 = new PointF((float)(121 * Amount1 + gridScale * i + xOffset), (float)(36 * Amount1 + gridScale * i2 + yOffset));
-                    point3 = new PointF((float)(133 * Amount1 + gridScale * i + xOffset), (float)(50 * Amount1 + gridScale * i2 + yOffset));
-                    point4 = new PointF((float)(121 * Amount1 + gridScale * i + xOffset), (float)(64 * Amount1 + gridScale * i2 + yOffset));
-                    point5 = new PointF((float)(99 * Amount1 + gridScale * i + xOffset), (float)(60 * Amount1 + gridScale * i2 + yOffset));
-                    point6 = new PointF((float)(100 * Amount1 + gridScale * i + xOffset), (float)(100 * Amount1 + gridScale * i2 + yOffset));
+                    points[0] = new PointF((float)(100 * Amount1 + gridScale * i + offset.X), (float)(0 * Amount1 + gridScale * i2 + offset.Y));
+                    points[1] = new PointF((float)(99 * Amount1 + gridScale * i + offset.X), (float)(40 * Amount1 + gridScale * i2 + offset.Y));
+                    points[2] = new PointF((float)(121 * Amount1 + gridScale * i + offset.X), (float)(36 * Amount1 + gridScale * i2 + offset.Y));
+                    points[3] = new PointF((float)(133 * Amount1 + gridScale * i + offset.X), (float)(50 * Amount1 + gridScale * i2 + offset.Y));
+                    points[4] = new PointF((float)(121 * Amount1 + gridScale * i + offset.X), (float)(64 * Amount1 + gridScale * i2 + offset.Y));
+                    points[5] = new PointF((float)(99 * Amount1 + gridScale * i + offset.X), (float)(60 * Amount1 + gridScale * i2 + offset.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i + offset.X), (float)(100 * Amount1 + gridScale * i2 + offset.Y));
                     break;
                 case 2: // lower apex
-                    point0 = new PointF((float)(0 * Amount1 + gridScale * i2 + xOffset), (float)(100 * Amount1 + gridScale * i + yOffset));
-                    point1 = new PointF((float)(40 * Amount1 + gridScale * i2 + xOffset), (float)(99 * Amount1 + gridScale * i + yOffset));
-                    point2 = new PointF((float)(36 * Amount1 + gridScale * i2 + xOffset), (float)(121 * Amount1 + gridScale * i + yOffset));
-                    point3 = new PointF((float)(50 * Amount1 + gridScale * i2 + xOffset), (float)(133 * Amount1 + gridScale * i + yOffset));
-                    point4 = new PointF((float)(64 * Amount1 + gridScale * i2 + xOffset), (float)(121 * Amount1 + gridScale * i + yOffset));
-                    point5 = new PointF((float)(60 * Amount1 + gridScale * i2 + xOffset), (float)(99 * Amount1 + gridScale * i + yOffset));
-                    point6 = new PointF((float)(100 * Amount1 + gridScale * i2 + xOffset), (float)(100 * Amount1 + gridScale * i + yOffset));
+                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
+                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + offset.X), (float)(99 * Amount1 + gridScale * i + offset.Y));
+                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + offset.X), (float)(121 * Amount1 + gridScale * i + offset.Y));
+                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + offset.X), (float)(133 * Amount1 + gridScale * i + offset.Y));
+                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + offset.X), (float)(121 * Amount1 + gridScale * i + offset.Y));
+                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + offset.X), (float)(99 * Amount1 + gridScale * i + offset.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
                     break;
                 case 3: // left apex
-                    point0 = new PointF((float)(100 * Amount1 + gridScale * i + xOffset), (float)(0 * Amount1 + gridScale * i2 + yOffset));
-                    point1 = new PointF((float)(101 * Amount1 + gridScale * i + xOffset), (float)(40 * Amount1 + gridScale * i2 + yOffset));
-                    point2 = new PointF((float)(79 * Amount1 + gridScale * i + xOffset), (float)(36 * Amount1 + gridScale * i2 + yOffset));
-                    point3 = new PointF((float)(67 * Amount1 + gridScale * i + xOffset), (float)(50 * Amount1 + gridScale * i2 + yOffset));
-                    point4 = new PointF((float)(79 * Amount1 + gridScale * i + xOffset), (float)(64 * Amount1 + gridScale * i2 + yOffset));
-                    point5 = new PointF((float)(101 * Amount1 + gridScale * i + xOffset), (float)(60 * Amount1 + gridScale * i2 + yOffset));
-                    point6 = new PointF((float)(100 * Amount1 + gridScale * i + xOffset), (float)(100 * Amount1 + gridScale * i2 + yOffset));
+                    points[0] = new PointF((float)(100 * Amount1 + gridScale * i + offset.X), (float)(0 * Amount1 + gridScale * i2 + offset.Y));
+                    points[1] = new PointF((float)(101 * Amount1 + gridScale * i + offset.X), (float)(40 * Amount1 + gridScale * i2 + offset.Y));
+                    points[2] = new PointF((float)(79 * Amount1 + gridScale * i + offset.X), (float)(36 * Amount1 + gridScale * i2 + offset.Y));
+                    points[3] = new PointF((float)(67 * Amount1 + gridScale * i + offset.X), (float)(50 * Amount1 + gridScale * i2 + offset.Y));
+                    points[4] = new PointF((float)(79 * Amount1 + gridScale * i + offset.X), (float)(64 * Amount1 + gridScale * i2 + offset.Y));
+                    points[5] = new PointF((float)(101 * Amount1 + gridScale * i + offset.X), (float)(60 * Amount1 + gridScale * i2 + offset.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i + offset.X), (float)(100 * Amount1 + gridScale * i2 + offset.Y));
                     break;
                 default: // upper apex
-                    point0 = new PointF((float)(0 * Amount1 + gridScale * i2 + xOffset), (float)(100 * Amount1 + gridScale * i + yOffset));
-                    point1 = new PointF((float)(40 * Amount1 + gridScale * i2 + xOffset), (float)(101 * Amount1 + gridScale * i + yOffset));
-                    point2 = new PointF((float)(36 * Amount1 + gridScale * i2 + xOffset), (float)(79 * Amount1 + gridScale * i + yOffset));
-                    point3 = new PointF((float)(50 * Amount1 + gridScale * i2 + xOffset), (float)(67 * Amount1 + gridScale * i + yOffset));
-                    point4 = new PointF((float)(64 * Amount1 + gridScale * i2 + xOffset), (float)(79 * Amount1 + gridScale * i + yOffset));
-                    point5 = new PointF((float)(60 * Amount1 + gridScale * i2 + xOffset), (float)(101 * Amount1 + gridScale * i + yOffset));
-                    point6 = new PointF((float)(100 * Amount1 + gridScale * i2 + xOffset), (float)(100 * Amount1 + gridScale * i + yOffset));
+                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
+                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + offset.X), (float)(101 * Amount1 + gridScale * i + offset.Y));
+                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + offset.X), (float)(79 * Amount1 + gridScale * i + offset.Y));
+                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + offset.X), (float)(67 * Amount1 + gridScale * i + offset.Y));
+                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + offset.X), (float)(79 * Amount1 + gridScale * i + offset.Y));
+                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + offset.X), (float)(101 * Amount1 + gridScale * i + offset.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
                     break;
             }
 
-            PointF[] curvePoints = { point0, point1, point2, point3, point4, point5, point6 };
-            return curvePoints;
+            return points;
         }
 
         #region CodeLab
