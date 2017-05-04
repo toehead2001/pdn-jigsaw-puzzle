@@ -117,8 +117,8 @@ namespace JigsawPuzzleEffect
         readonly BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
         Surface puzzleSurface;
         int horLoops, verLoops;
-        Point offset;
         double gridScale;
+        Rectangle puzzleRect;
 
         protected override void OnSetRenderInfo(PropertyBasedEffectConfigToken newToken, RenderArgs dstArgs, RenderArgs srcArgs)
         {
@@ -134,20 +134,16 @@ namespace JigsawPuzzleEffect
 
             gridScale = 100 * Amount1;
 
-            offset = new Point
+            puzzleRect = new Rectangle
             {
-                X = (int)Math.Round((selection.Width % gridScale) / 2 + (Amount6.First * (selection.Width % gridScale) / 2)),
-                Y = (int)Math.Round((selection.Height % gridScale) / 2 + (Amount6.Second * (selection.Height % gridScale) / 2))
-            };
-
-            Size puzzleSize = new Size
-            {
+                X = selection.Left + (int)Math.Round((selection.Width % gridScale) / 2 + (Amount6.First * (selection.Width % gridScale) / 2)),
+                Y = selection.Top + (int)Math.Round((selection.Height % gridScale) / 2 + (Amount6.Second * (selection.Height % gridScale) / 2)),
                 Width = selection.Width - (int)(selection.Width % gridScale),
                 Height = selection.Height - (int)(selection.Height % gridScale)
             };
 
-            horLoops = puzzleSize.Height / (int)(gridScale);
-            verLoops = puzzleSize.Width / (int)(gridScale);
+            horLoops = puzzleRect.Height / (int)(gridScale);
+            verLoops = puzzleRect.Width / (int)(gridScale);
 
             // Puzzle Pattern
             bool horAlt, verAlt;
@@ -287,49 +283,49 @@ namespace JigsawPuzzleEffect
             switch ((int)apexLocation)
             {
                 case 0: // upper apex
-                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
-                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + offset.X), (float)(101 * Amount1 + gridScale * i + offset.Y));
-                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + offset.X), (float)(79 * Amount1 + gridScale * i + offset.Y));
-                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + offset.X), (float)(67 * Amount1 + gridScale * i + offset.Y));
-                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + offset.X), (float)(79 * Amount1 + gridScale * i + offset.Y));
-                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + offset.X), (float)(101 * Amount1 + gridScale * i + offset.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
+                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(101 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(79 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(67 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(79 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(101 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
                     break;
                 case 1: // right apex
-                    points[0] = new PointF((float)(100 * Amount1 + gridScale * i + offset.X), (float)(0 * Amount1 + gridScale * i2 + offset.Y));
-                    points[1] = new PointF((float)(99 * Amount1 + gridScale * i + offset.X), (float)(40 * Amount1 + gridScale * i2 + offset.Y));
-                    points[2] = new PointF((float)(121 * Amount1 + gridScale * i + offset.X), (float)(36 * Amount1 + gridScale * i2 + offset.Y));
-                    points[3] = new PointF((float)(133 * Amount1 + gridScale * i + offset.X), (float)(50 * Amount1 + gridScale * i2 + offset.Y));
-                    points[4] = new PointF((float)(121 * Amount1 + gridScale * i + offset.X), (float)(64 * Amount1 + gridScale * i2 + offset.Y));
-                    points[5] = new PointF((float)(99 * Amount1 + gridScale * i + offset.X), (float)(60 * Amount1 + gridScale * i2 + offset.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i + offset.X), (float)(100 * Amount1 + gridScale * i2 + offset.Y));
+                    points[0] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(0 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[1] = new PointF((float)(99 * Amount1 + gridScale * i + puzzleRect.X), (float)(40 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[2] = new PointF((float)(121 * Amount1 + gridScale * i + puzzleRect.X), (float)(36 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[3] = new PointF((float)(133 * Amount1 + gridScale * i + puzzleRect.X), (float)(50 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[4] = new PointF((float)(121 * Amount1 + gridScale * i + puzzleRect.X), (float)(64 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[5] = new PointF((float)(99 * Amount1 + gridScale * i + puzzleRect.X), (float)(60 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(100 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     break;
                 case 2: // lower apex
-                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
-                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + offset.X), (float)(99 * Amount1 + gridScale * i + offset.Y));
-                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + offset.X), (float)(121 * Amount1 + gridScale * i + offset.Y));
-                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + offset.X), (float)(133 * Amount1 + gridScale * i + offset.Y));
-                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + offset.X), (float)(121 * Amount1 + gridScale * i + offset.Y));
-                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + offset.X), (float)(99 * Amount1 + gridScale * i + offset.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
+                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(99 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(121 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(133 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(121 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(99 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
                     break;
                 case 3: // left apex
-                    points[0] = new PointF((float)(100 * Amount1 + gridScale * i + offset.X), (float)(0 * Amount1 + gridScale * i2 + offset.Y));
-                    points[1] = new PointF((float)(101 * Amount1 + gridScale * i + offset.X), (float)(40 * Amount1 + gridScale * i2 + offset.Y));
-                    points[2] = new PointF((float)(79 * Amount1 + gridScale * i + offset.X), (float)(36 * Amount1 + gridScale * i2 + offset.Y));
-                    points[3] = new PointF((float)(67 * Amount1 + gridScale * i + offset.X), (float)(50 * Amount1 + gridScale * i2 + offset.Y));
-                    points[4] = new PointF((float)(79 * Amount1 + gridScale * i + offset.X), (float)(64 * Amount1 + gridScale * i2 + offset.Y));
-                    points[5] = new PointF((float)(101 * Amount1 + gridScale * i + offset.X), (float)(60 * Amount1 + gridScale * i2 + offset.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i + offset.X), (float)(100 * Amount1 + gridScale * i2 + offset.Y));
+                    points[0] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(0 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[1] = new PointF((float)(101 * Amount1 + gridScale * i + puzzleRect.X), (float)(40 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[2] = new PointF((float)(79 * Amount1 + gridScale * i + puzzleRect.X), (float)(36 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[3] = new PointF((float)(67 * Amount1 + gridScale * i + puzzleRect.X), (float)(50 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[4] = new PointF((float)(79 * Amount1 + gridScale * i + puzzleRect.X), (float)(64 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[5] = new PointF((float)(101 * Amount1 + gridScale * i + puzzleRect.X), (float)(60 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(100 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     break;
                 default: // upper apex
-                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
-                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + offset.X), (float)(101 * Amount1 + gridScale * i + offset.Y));
-                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + offset.X), (float)(79 * Amount1 + gridScale * i + offset.Y));
-                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + offset.X), (float)(67 * Amount1 + gridScale * i + offset.Y));
-                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + offset.X), (float)(79 * Amount1 + gridScale * i + offset.Y));
-                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + offset.X), (float)(101 * Amount1 + gridScale * i + offset.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + offset.X), (float)(100 * Amount1 + gridScale * i + offset.Y));
+                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(101 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(79 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(67 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(79 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(101 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
                     break;
             }
 
@@ -347,7 +343,7 @@ namespace JigsawPuzzleEffect
                 if (IsCancelRequested) return;
                 for (int x = rect.Left; x < rect.Right; x++)
                 {
-                    puzzlePixel = puzzleSurface.GetBilinearSample(x - selection.Left, y - selection.Top);
+                    puzzlePixel = puzzleSurface[x, y];
                     sourcePixel = src[x, y];
 
                     if (Amount4)
@@ -363,9 +359,9 @@ namespace JigsawPuzzleEffect
                     // Delete pixels outside the puzzle border
                     if (horLoops > 1 || verLoops > 1)
                     {
-                        if (offset.X != 0 && x - selection.Left < offset.X + 1 || x > selection.Right + offset.X - 1 - (selection.Width % gridScale))
+                        if (x <= puzzleRect.Left || x >= puzzleRect.Right)
                             finalPixel.A = 0;
-                        if (offset.Y != 0 && y - selection.Top < offset.Y + 1 || y > selection.Bottom + offset.Y - 1 - (selection.Height % gridScale))
+                        else if (y <= puzzleRect.Top || y >= puzzleRect.Bottom)
                             finalPixel.A = 0;
                     }
 
