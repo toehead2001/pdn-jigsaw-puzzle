@@ -336,36 +336,33 @@ namespace JigsawPuzzleEffect
         {
             Rectangle selection = EnvironmentParameters.GetSelection(src.Bounds).GetBoundsInt();
 
-            ColorBgra sourcePixel, puzzlePixel, finalPixel;
+            ColorBgra currentPixel;
 
             for (int y = rect.Top; y < rect.Bottom; y++)
             {
                 if (IsCancelRequested) return;
                 for (int x = rect.Left; x < rect.Right; x++)
                 {
-                    puzzlePixel = puzzleSurface[x, y];
-                    sourcePixel = src[x, y];
-
                     if (Amount4)
                     {
-                        sourcePixel.A = Int32Util.ClampToByte(255 - puzzlePixel.A);
-                        finalPixel = sourcePixel;
+                        currentPixel = src[x, y];
+                        currentPixel.A = Int32Util.ClampToByte(byte.MaxValue - puzzleSurface[x, y].A);
                     }
                     else
                     {
-                        finalPixel = normalOp.Apply(sourcePixel, puzzlePixel);
+                        currentPixel = normalOp.Apply(src[x, y], puzzleSurface[x, y]);
                     }
 
                     // Delete pixels outside the puzzle border
                     if (horLoops > 1 || verLoops > 1)
                     {
                         if (x <= puzzleRect.Left || x >= puzzleRect.Right)
-                            finalPixel.A = 0;
+                            currentPixel.A = 0;
                         else if (y <= puzzleRect.Top || y >= puzzleRect.Bottom)
-                            finalPixel.A = 0;
+                            currentPixel.A = 0;
                     }
 
-                    dst[x, y] = finalPixel;
+                    dst[x, y] = currentPixel;
                 }
             }
         }
