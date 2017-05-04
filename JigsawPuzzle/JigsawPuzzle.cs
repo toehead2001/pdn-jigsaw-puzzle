@@ -132,10 +132,6 @@ namespace JigsawPuzzleEffect
 
             Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
 
-            Bitmap puzzleBitmap = new Bitmap(selection.Width, selection.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            Graphics puzzleGraphics = Graphics.FromImage(puzzleBitmap);
-            puzzleGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
             gridScale = 100 * Amount1;
 
             offset = new Point
@@ -179,91 +175,96 @@ namespace JigsawPuzzleEffect
                     break;
             }
 
-            Pen puzzlePen = new Pen(Amount5, Amount2);
-            PointF[] curvePoints;
+            if (puzzleSurface == null)
+                puzzleSurface = new Surface(srcArgs.Surface.Size);
+            else
+                puzzleSurface.Clear(ColorBgra.Transparent);
 
-            //Horizontal Lines
-            #region Horizontal Lines
-            for (int i = 0; i < horLoops - 1; i++)
+            using (Graphics puzzleGraphics = new RenderArgs(puzzleSurface).Graphics)
+            using (Pen puzzlePen = new Pen(Amount5, Amount2))
             {
-                if (horAlt && i % 2 == 0)
-                {
-                    for (int i2 = 0; i2 < verLoops; i2++)
-                    {
-                        if (i2 % 2 != 0) // upper apex on odds
-                        {
-                            curvePoints = getCurvePoints(Apex.Up, i, i2); // upper apex
-                        }
-                        else
-                        {
-                            curvePoints = getCurvePoints(Apex.Down, i, i2); // lower apex
-                        }
+                puzzleGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-                        puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
+                PointF[] curvePoints;
+
+                //Horizontal Lines
+                #region Horizontal Lines
+                for (int i = 0; i < horLoops - 1; i++)
+                {
+                    if (horAlt && i % 2 == 0)
+                    {
+                        for (int i2 = 0; i2 < verLoops; i2++)
+                        {
+                            if (i2 % 2 != 0) // upper apex on odds
+                            {
+                                curvePoints = getCurvePoints(Apex.Up, i, i2); // upper apex
+                            }
+                            else
+                            {
+                                curvePoints = getCurvePoints(Apex.Down, i, i2); // lower apex
+                            }
+
+                            puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
+                        }
+                    }
+                    else
+                    {
+                        for (int i2 = 0; i2 < verLoops; i2++)
+                        {
+                            if (i2 % 2 == 0) // upper apex on evens
+                            {
+                                curvePoints = getCurvePoints(Apex.Up, i, i2); // upper apex
+                            }
+                            else
+                            {
+                                curvePoints = getCurvePoints(Apex.Down, i, i2); // lower apex
+                            }
+
+                            puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
+                        }
                     }
                 }
-                else
-                {
-                    for (int i2 = 0; i2 < verLoops; i2++)
-                    {
-                        if (i2 % 2 == 0) // upper apex on evens
-                        {
-                            curvePoints = getCurvePoints(Apex.Up, i, i2); // upper apex
-                        }
-                        else
-                        {
-                            curvePoints = getCurvePoints(Apex.Down, i, i2); // lower apex
-                        }
+                #endregion
 
-                        puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
+                //Vertical Lines
+                #region Vertical Lines
+                for (int i = 0; i < verLoops - 1; i++)
+                {
+                    if (verAlt && i % 2 == 0)
+                    {
+                        for (int i2 = 0; i2 < horLoops; i2++)
+                        {
+                            if (i2 % 2 != 0) // right apex on odds
+                            {
+                                curvePoints = getCurvePoints(Apex.Right, i, i2); // right apex
+                            }
+                            else
+                            {
+                                curvePoints = getCurvePoints(Apex.Left, i, i2); // left apex
+                            }
+
+                            puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
+                        }
+                    }
+                    else
+                    {
+                        for (int i2 = 0; i2 < horLoops; i2++)
+                        {
+                            if (i2 % 2 == 0) // right apex on evens
+                            {
+                                curvePoints = getCurvePoints(Apex.Right, i, i2); // right apex
+                            }
+                            else
+                            {
+                                curvePoints = getCurvePoints(Apex.Left, i, i2); // left apex
+                            }
+
+                            puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
+                        }
                     }
                 }
+                #endregion
             }
-            #endregion
-
-            //Vertical Lines
-            #region Vertical Lines
-            for (int i = 0; i < verLoops - 1; i++)
-            {
-                if (verAlt && i % 2 == 0)
-                {
-                    for (int i2 = 0; i2 < horLoops; i2++)
-                    {
-                        if (i2 % 2 != 0) // right apex on odds
-                        {
-                            curvePoints = getCurvePoints(Apex.Right, i, i2); // right apex
-                        }
-                        else
-                        {
-                            curvePoints = getCurvePoints(Apex.Left, i, i2); // left apex
-                        }
-
-                        puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
-                    }
-                }
-                else
-                {
-                    for (int i2 = 0; i2 < horLoops; i2++)
-                    {
-                        if (i2 % 2 == 0) // right apex on evens
-                        {
-                            curvePoints = getCurvePoints(Apex.Right, i, i2); // right apex
-                        }
-                        else
-                        {
-                            curvePoints = getCurvePoints(Apex.Left, i, i2); // left apex
-                        }
-
-                        puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
-                    }
-                }
-            }
-            #endregion
-
-            puzzlePen.Dispose();
-
-            puzzleSurface = Surface.CopyFromBitmap(puzzleBitmap);
-            puzzleBitmap.Dispose();
 
 
             base.OnSetRenderInfo(newToken, dstArgs, srcArgs);
