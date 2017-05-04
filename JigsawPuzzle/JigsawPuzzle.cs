@@ -107,6 +107,19 @@ namespace JigsawPuzzleEffect
             return configUI;
         }
 
+        double Amount1 = 1; // [0.2,5] Scale
+        int Amount2 = 2; // [1,10] Line Width
+        byte Amount3 = 0; // Pattern|Pattern A|Pattern B|Pattern C|Pattern D
+        bool Amount4 = true; // [0,1] Transparent
+        ColorBgra Amount5 = ColorBgra.FromBgr(0, 0, 0); // Line Color
+        Pair<double, double> Amount6 = Pair.Create(0.0, 0.0); // Offset
+
+        readonly BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
+        Surface puzzleSurface;
+        int horLoops, verLoops;
+        Point offset;
+        double gridScale;
+
         protected override void OnSetRenderInfo(PropertyBasedEffectConfigToken newToken, RenderArgs dstArgs, RenderArgs srcArgs)
         {
             Amount1 = newToken.GetProperty<DoubleProperty>(PropertyNames.Amount1).Value;
@@ -321,20 +334,6 @@ namespace JigsawPuzzleEffect
 
             return points;
         }
-
-        #region CodeLab
-        double Amount1 = 1; // [0.2,5] Scale
-        int Amount2 = 2; // [1,10] Line Width
-        byte Amount3 = 0; // Pattern|Pattern A|Pattern B|Pattern C|Pattern D
-        bool Amount4 = true; // [0,1] Transparent
-        ColorBgra Amount5 = ColorBgra.FromBgr(0, 0, 0); // Line Color
-        Pair<double, double> Amount6 = Pair.Create(0.0, 0.0); // Offset
-        #endregion
-
-        readonly BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
-        Surface puzzleSurface;
-        int horLoops, verLoops, xOffset, yOffset;
-        double gridScale;
 
         void Render(Surface dst, Surface src, Rectangle rect)
         {
