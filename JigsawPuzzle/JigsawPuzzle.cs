@@ -37,7 +37,7 @@ namespace JigsawPuzzleEffect
             Left
         }
 
-        public enum PropertyNames
+        private enum PropertyNames
         {
             Amount1,
             Amount2,
@@ -47,7 +47,7 @@ namespace JigsawPuzzleEffect
             Amount6
         }
 
-        public enum Amount3Options
+        private enum Amount3Options
         {
             Amount3Option1,
             Amount3Option2,
