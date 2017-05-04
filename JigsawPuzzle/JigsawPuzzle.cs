@@ -125,14 +125,20 @@ namespace JigsawPuzzleEffect
 
             gridScale = 100 * Amount1;
 
-            xOffset = (int)((selection.Width % gridScale) / 2 + (Amount6.First * (selection.Width % gridScale) / 2));
-            yOffset = (int)((selection.Height % gridScale) / 2 + (Amount6.Second * (selection.Height % gridScale) / 2));
+            offset = new Point
+            {
+                X = (int)Math.Round((selection.Width % gridScale) / 2 + (Amount6.First * (selection.Width % gridScale) / 2)),
+                Y = (int)Math.Round((selection.Height % gridScale) / 2 + (Amount6.Second * (selection.Height % gridScale) / 2))
+            };
 
-            int puzzleWidth = selection.Width - (int)(selection.Width % gridScale);
-            int puzzleHeight = selection.Height - (int)(selection.Height % gridScale);
+            Size puzzleSize = new Size
+            {
+                Width = selection.Width - (int)(selection.Width % gridScale),
+                Height = selection.Height - (int)(selection.Height % gridScale)
+            };
 
-            horLoops = puzzleHeight / (int)(gridScale);
-            verLoops = puzzleWidth / (int)(gridScale);
+            horLoops = puzzleSize.Height / (int)(gridScale);
+            verLoops = puzzleSize.Width / (int)(gridScale);
 
             // Puzzle Pattern
             bool horAlt, verAlt;
@@ -357,9 +363,9 @@ namespace JigsawPuzzleEffect
                     // Delete pixels outside the puzzle border
                     if (horLoops > 1 || verLoops > 1)
                     {
-                        if (xOffset != 0 && x - selection.Left < xOffset + 1 || x > selection.Right + xOffset - 1 - (selection.Width % gridScale))
+                        if (offset.X != 0 && x - selection.Left < offset.X + 1 || x > selection.Right + offset.X - 1 - (selection.Width % gridScale))
                             finalPixel.A = 0;
-                        if (yOffset != 0 && y - selection.Top < yOffset + 1 || y > selection.Bottom + yOffset - 1 - (selection.Height % gridScale))
+                        if (offset.Y != 0 && y - selection.Top < offset.Y + 1 || y > selection.Bottom + offset.Y - 1 - (selection.Height % gridScale))
                             finalPixel.A = 0;
                     }
 
