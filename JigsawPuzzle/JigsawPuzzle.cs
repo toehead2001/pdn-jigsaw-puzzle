@@ -15,7 +15,7 @@ namespace JigsawPuzzleEffect
         public string Copyright => L10nStrings.EffectDescription;
         public string DisplayName => L10nStrings.EffectName;
         public Version Version => base.GetType().Assembly.GetName().Version;
-        public Uri WebsiteUri => new Uri("http://www.getpaint.net/redirect/plugins.html");
+        public Uri WebsiteUri => new Uri("https://forums.getpaint.net/index.php?showtopic=32391");
 
         public string plugin_browser_Keywords => L10nStrings.EffectKeywords;
         public string plugin_browser_Description => L10nStrings.EffectDescription;
@@ -60,16 +60,20 @@ namespace JigsawPuzzleEffect
 
         protected override PropertyCollection OnCreatePropertyCollection()
         {
-            List<Property> props = new List<Property>();
-            props.Add(new DoubleProperty(PropertyNames.Amount1, 1, 0.2, 10));
-            props.Add(new Int32Property(PropertyNames.Amount2, 2, 1, 10));
-            props.Add(StaticListChoiceProperty.CreateForEnum<Amount3Options>(PropertyNames.Amount3, 0, false));
-            props.Add(new BooleanProperty(PropertyNames.Amount4, true));
-            props.Add(new Int32Property(PropertyNames.Amount5, ColorBgra.ToOpaqueInt32(ColorBgra.FromBgra(EnvironmentParameters.PrimaryColor.B, EnvironmentParameters.PrimaryColor.G, EnvironmentParameters.PrimaryColor.R, 255)), 0, 0xffffff));
-            props.Add(new DoubleVectorProperty(PropertyNames.Amount6, Pair.Create(0.0, 0.0), Pair.Create(-1.0, -1.0), Pair.Create(+1.0, +1.0)));
+            List<Property> props = new List<Property>
+            {
+                new DoubleProperty(PropertyNames.Amount1, 1, 0.2, 10),
+                new Int32Property(PropertyNames.Amount2, 2, 1, 10),
+                StaticListChoiceProperty.CreateForEnum<Amount3Options>(PropertyNames.Amount3, 0, false),
+                new BooleanProperty(PropertyNames.Amount4, true),
+                new Int32Property(PropertyNames.Amount5, ColorBgra.ToOpaqueInt32(ColorBgra.FromBgra(EnvironmentParameters.PrimaryColor.B, EnvironmentParameters.PrimaryColor.G, EnvironmentParameters.PrimaryColor.R, 255)), 0, 0xffffff),
+                new DoubleVectorProperty(PropertyNames.Amount6, Pair.Create(0.0, 0.0), Pair.Create(-1.0, -1.0), Pair.Create(+1.0, +1.0))
+            };
 
-            List<PropertyCollectionRule> propRules = new List<PropertyCollectionRule>();
-            propRules.Add(new ReadOnlyBoundToBooleanRule(PropertyNames.Amount5, PropertyNames.Amount4, false));
+            List<PropertyCollectionRule> propRules = new List<PropertyCollectionRule>
+            {
+                new ReadOnlyBoundToBooleanRule(PropertyNames.Amount5, PropertyNames.Amount4, false)
+            };
 
             return new PropertyCollection(props, propRules);
         }
@@ -336,8 +340,6 @@ namespace JigsawPuzzleEffect
 
         void Render(Surface dst, Surface src, Rectangle rect)
         {
-            Rectangle selection = EnvironmentParameters.GetSelection(src.Bounds).GetBoundsInt();
-
             ColorBgra currentPixel;
 
             for (int y = rect.Top; y < rect.Bottom; y++)
