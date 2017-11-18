@@ -12,20 +12,22 @@ namespace JigsawPuzzleEffect
     public class PluginSupportInfo : IPluginSupportInfo
     {
         public string Author => ((AssemblyCopyrightAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false)[0]).Copyright;
-        public string Copyright => ((AssemblyDescriptionAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0]).Description;
-        public string DisplayName => ((AssemblyProductAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product;
+        public string Copyright => L10nStrings.EffectDescription;
+        public string DisplayName => L10nStrings.EffectName;
         public Version Version => base.GetType().Assembly.GetName().Version;
         public Uri WebsiteUri => new Uri("http://www.getpaint.net/redirect/plugins.html");
+
+        public string plugin_browser_Keywords => L10nStrings.EffectKeywords;
+        public string plugin_browser_Description => L10nStrings.EffectDescription;
     }
 
     [PluginSupportInfo(typeof(PluginSupportInfo), DisplayName = "Jigsaw Puzzle")]
     public class JigsawPuzzleEffectPlugin : PropertyBasedEffect
     {
-        private const string StaticName = "Jigsaw Puzzle";
         private static readonly Image StaticIcon = new Bitmap(typeof(JigsawPuzzleEffectPlugin), "JigsawPuzzle.png");
 
         public JigsawPuzzleEffectPlugin()
-            : base(StaticName, StaticIcon, SubmenuNames.Render, EffectFlags.Configurable)
+            : base(L10nStrings.EffectName, StaticIcon, SubmenuNames.Render, EffectFlags.Configurable)
         {
         }
 
@@ -76,23 +78,23 @@ namespace JigsawPuzzleEffect
         {
             ControlInfo configUI = CreateDefaultConfigUI(props);
 
-            configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.DisplayName, "Scale");
+            configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.DisplayName, L10nStrings.Scale);
             configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.SliderLargeChange, 0.25);
             configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.SliderSmallChange, 0.05);
             configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.UpDownIncrement, 0.001);
             configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.DecimalPlaces, 3);
-            configUI.SetPropertyControlValue(PropertyNames.Amount2, ControlInfoPropertyNames.DisplayName, "Line Width");
-            configUI.SetPropertyControlValue(PropertyNames.Amount3, ControlInfoPropertyNames.DisplayName, "Pattern");
+            configUI.SetPropertyControlValue(PropertyNames.Amount2, ControlInfoPropertyNames.DisplayName, L10nStrings.LineWidth);
+            configUI.SetPropertyControlValue(PropertyNames.Amount3, ControlInfoPropertyNames.DisplayName, L10nStrings.Pattern);
             PropertyControlInfo Amount3Control = configUI.FindControlForPropertyName(PropertyNames.Amount3);
-            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option1, "Alternate Horizontal & Vertical");
-            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option2, "Alternate Neither");
-            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option3, "Alternate Horizontal");
-            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option4, "Alternate Vertical");
-            configUI.SetPropertyControlValue(PropertyNames.Amount4, ControlInfoPropertyNames.DisplayName, "Line Color");
-            configUI.SetPropertyControlValue(PropertyNames.Amount4, ControlInfoPropertyNames.Description, "Transparent");
+            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option1, L10nStrings.AltHorVer);
+            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option2, L10nStrings.AltNone);
+            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option3, L10nStrings.AltHor);
+            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option4, L10nStrings.AltVer);
+            configUI.SetPropertyControlValue(PropertyNames.Amount4, ControlInfoPropertyNames.DisplayName, L10nStrings.LineColor);
+            configUI.SetPropertyControlValue(PropertyNames.Amount4, ControlInfoPropertyNames.Description, L10nStrings.Transparent);
             configUI.SetPropertyControlValue(PropertyNames.Amount5, ControlInfoPropertyNames.DisplayName, string.Empty);
             configUI.SetPropertyControlType(PropertyNames.Amount5, PropertyControlType.ColorWheel);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.DisplayName, "Position");
+            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.DisplayName, L10nStrings.Position);
             configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.SliderSmallChangeX, 0.05);
             configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.SliderLargeChangeX, 0.25);
             configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.UpDownIncrementX, 0.001);
