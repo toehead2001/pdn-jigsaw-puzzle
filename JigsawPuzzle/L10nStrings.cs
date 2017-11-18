@@ -40,6 +40,8 @@ namespace JigsawPuzzleEffect
             {
                 switch (UICulture)
                 {
+                    case "ru":
+                        return "мозаика|пазл";
                     default:
                         return "jigsaw|puzzle";
                 }
