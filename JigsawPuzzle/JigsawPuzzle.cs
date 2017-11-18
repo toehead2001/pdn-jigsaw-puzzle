@@ -21,7 +21,7 @@ namespace JigsawPuzzleEffect
         public string plugin_browser_Description => L10nStrings.EffectDescription;
     }
 
-    [PluginSupportInfo(typeof(PluginSupportInfo), DisplayName = "Jigsaw Puzzle")]
+    [PluginSupportInfo(typeof(PluginSupportInfo))]
     public class JigsawPuzzleEffectPlugin : PropertyBasedEffect
     {
         private static readonly Image StaticIcon = new Bitmap(typeof(JigsawPuzzleEffectPlugin), "JigsawPuzzle.png");
