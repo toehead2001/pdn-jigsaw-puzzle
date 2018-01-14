@@ -347,7 +347,12 @@ namespace JigsawPuzzleEffect
                 if (IsCancelRequested) return;
                 for (int x = rect.Left; x < rect.Right; x++)
                 {
-                    if (Amount4)
+                    if ((horLoops > 1 || verLoops > 1) && (x <= puzzleRect.Left || x >= puzzleRect.Right || y <= puzzleRect.Top || y >= puzzleRect.Bottom))
+                    {
+                        currentPixel = src[x, y];
+                        currentPixel.A = 0; // Delete pixels outside the puzzle border
+                    }
+                    else if (Amount4)
                     {
                         currentPixel = src[x, y];
                         currentPixel.A = Int32Util.ClampToByte(byte.MaxValue - puzzleSurface[x, y].A);
@@ -355,15 +360,6 @@ namespace JigsawPuzzleEffect
                     else
                     {
                         currentPixel = normalOp.Apply(src[x, y], puzzleSurface[x, y]);
-                    }
-
-                    // Delete pixels outside the puzzle border
-                    if (horLoops > 1 || verLoops > 1)
-                    {
-                        if (x <= puzzleRect.Left || x >= puzzleRect.Right)
-                            currentPixel.A = 0;
-                        else if (y <= puzzleRect.Top || y >= puzzleRect.Bottom)
-                            currentPixel.A = 0;
                     }
 
                     dst[x, y] = currentPixel;
