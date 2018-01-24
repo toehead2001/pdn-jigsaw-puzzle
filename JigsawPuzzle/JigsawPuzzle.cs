@@ -358,5 +358,12 @@ namespace JigsawPuzzleEffect
                 }
             }
         }
+
+        protected override void OnDispose(bool disposing)
+        {
+            puzzleSurface?.Dispose();
+
+            base.OnDispose(disposing);
+        }
     }
 }
