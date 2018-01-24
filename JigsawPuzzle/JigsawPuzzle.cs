@@ -286,18 +286,9 @@ namespace JigsawPuzzleEffect
         {
             PointF[] points = new PointF[7];
 
-            switch ((int)apexLocation)
+            switch (apexLocation)
             {
-                case 0: // upper apex
-                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(101 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(79 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(67 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(79 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(101 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
-                    break;
-                case 1: // right apex
+                case Apex.Right:
                     points[0] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(0 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     points[1] = new PointF((float)(99 * Amount1 + gridScale * i + puzzleRect.X), (float)(40 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     points[2] = new PointF((float)(121 * Amount1 + gridScale * i + puzzleRect.X), (float)(36 * Amount1 + gridScale * i2 + puzzleRect.Y));
@@ -306,7 +297,7 @@ namespace JigsawPuzzleEffect
                     points[5] = new PointF((float)(99 * Amount1 + gridScale * i + puzzleRect.X), (float)(60 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     points[6] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(100 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     break;
-                case 2: // lower apex
+                case Apex.Down:
                     points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
                     points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(99 * Amount1 + gridScale * i + puzzleRect.Y));
                     points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(121 * Amount1 + gridScale * i + puzzleRect.Y));
@@ -315,7 +306,7 @@ namespace JigsawPuzzleEffect
                     points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(99 * Amount1 + gridScale * i + puzzleRect.Y));
                     points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
                     break;
-                case 3: // left apex
+                case Apex.Left:
                     points[0] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(0 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     points[1] = new PointF((float)(101 * Amount1 + gridScale * i + puzzleRect.X), (float)(40 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     points[2] = new PointF((float)(79 * Amount1 + gridScale * i + puzzleRect.X), (float)(36 * Amount1 + gridScale * i2 + puzzleRect.Y));
@@ -324,7 +315,8 @@ namespace JigsawPuzzleEffect
                     points[5] = new PointF((float)(101 * Amount1 + gridScale * i + puzzleRect.X), (float)(60 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     points[6] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(100 * Amount1 + gridScale * i2 + puzzleRect.Y));
                     break;
-                default: // upper apex
+                case Apex.Up:
+                default:
                     points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
                     points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(101 * Amount1 + gridScale * i + puzzleRect.Y));
                     points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(79 * Amount1 + gridScale * i + puzzleRect.Y));
