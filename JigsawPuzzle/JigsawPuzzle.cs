@@ -339,7 +339,7 @@ namespace JigsawPuzzleEffect
                 if (IsCancelRequested) return;
                 for (int x = rect.Left; x < rect.Right; x++)
                 {
-                    if ((horLoops > 1 || verLoops > 1) && (x <= puzzleRect.Left || x >= puzzleRect.Right || y <= puzzleRect.Top || y >= puzzleRect.Bottom))
+                    if ((horLoops > 1 || verLoops > 1) && !puzzleRect.Contains(x, y))
                     {
                         currentPixel = src[x, y];
                         currentPixel.A = 0; // Delete pixels outside the puzzle border
