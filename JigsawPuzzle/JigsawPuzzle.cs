@@ -113,18 +113,18 @@ namespace JigsawPuzzleEffect
             return configUI;
         }
 
-        double scale = 1; // [0.2,5] Scale
-        int lineWidth = 2; // [1,10] Line Width
-        Pattern pattern = 0; // Pattern|Pattern A|Pattern B|Pattern C|Pattern D
-        bool transparent = true; // [0,1] Transparent
-        ColorBgra lineColor = ColorBgra.FromBgr(0, 0, 0); // Line Color
-        Pair<double, double> offset = Pair.Create(0.0, 0.0); // Offset
+        private double scale = 1; // [0.2,5] Scale
+        private int lineWidth = 2; // [1,10] Line Width
+        private Pattern pattern = 0; // Pattern|Pattern A|Pattern B|Pattern C|Pattern D
+        private bool transparent = true; // [0,1] Transparent
+        private ColorBgra lineColor = ColorBgra.FromBgr(0, 0, 0); // Line Color
+        private Pair<double, double> offset = Pair.Create(0.0, 0.0); // Offset
 
-        readonly BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
-        Surface puzzleSurface;
-        int horLoops, verLoops;
-        double gridScale;
-        Rectangle puzzleRect;
+        private readonly BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
+        private Surface puzzleSurface;
+        private int horLoops, verLoops;
+        private double gridScale;
+        private Rectangle puzzleRect;
 
         protected override void OnSetRenderInfo(PropertyBasedEffectConfigToken newToken, RenderArgs dstArgs, RenderArgs srcArgs)
         {
@@ -282,7 +282,7 @@ namespace JigsawPuzzleEffect
         }
 
         // Define Curve points
-        PointF[] getCurvePoints(Apex apexLocation, int i, int i2)
+        private PointF[] getCurvePoints(Apex apexLocation, int i, int i2)
         {
             PointF[] points = new PointF[7];
 
@@ -330,7 +330,7 @@ namespace JigsawPuzzleEffect
             return points;
         }
 
-        void Render(Surface dst, Surface src, Rectangle rect)
+        private void Render(Surface dst, Surface src, Rectangle rect)
         {
             ColorBgra currentPixel;
 
