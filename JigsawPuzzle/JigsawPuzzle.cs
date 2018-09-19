@@ -41,20 +41,20 @@ namespace JigsawPuzzleEffect
 
         private enum PropertyNames
         {
-            Amount1,
-            Amount2,
-            Amount3,
-            Amount4,
-            Amount5,
-            Amount6
+            Scale,
+            LineWidth,
+            Pattern,
+            Transparent,
+            LineColor,
+            Offset
         }
 
-        private enum Amount3Options
+        private enum Pattern
         {
-            Amount3Option1,
-            Amount3Option2,
-            Amount3Option3,
-            Amount3Option4
+            AltHorVer,
+            AltNone,
+            AltHor,
+            AltVer
         }
 
 
@@ -62,17 +62,17 @@ namespace JigsawPuzzleEffect
         {
             List<Property> props = new List<Property>
             {
-                new DoubleProperty(PropertyNames.Amount1, 1, 0.2, 10),
-                new Int32Property(PropertyNames.Amount2, 2, 1, 10),
-                StaticListChoiceProperty.CreateForEnum<Amount3Options>(PropertyNames.Amount3, 0, false),
-                new BooleanProperty(PropertyNames.Amount4, true),
-                new Int32Property(PropertyNames.Amount5, ColorBgra.ToOpaqueInt32(ColorBgra.FromBgra(EnvironmentParameters.PrimaryColor.B, EnvironmentParameters.PrimaryColor.G, EnvironmentParameters.PrimaryColor.R, 255)), 0, 0xffffff),
-                new DoubleVectorProperty(PropertyNames.Amount6, Pair.Create(0.0, 0.0), Pair.Create(-1.0, -1.0), Pair.Create(+1.0, +1.0))
+                new DoubleProperty(PropertyNames.Scale, 1, 0.2, 10),
+                new Int32Property(PropertyNames.LineWidth, 2, 1, 10),
+                StaticListChoiceProperty.CreateForEnum<Pattern>(PropertyNames.Pattern, 0, false),
+                new BooleanProperty(PropertyNames.Transparent, true),
+                new Int32Property(PropertyNames.LineColor, ColorBgra.ToOpaqueInt32(ColorBgra.FromBgra(EnvironmentParameters.PrimaryColor.B, EnvironmentParameters.PrimaryColor.G, EnvironmentParameters.PrimaryColor.R, 255)), 0, 0xffffff),
+                new DoubleVectorProperty(PropertyNames.Offset, Pair.Create(0.0, 0.0), Pair.Create(-1.0, -1.0), Pair.Create(+1.0, +1.0))
             };
 
             List<PropertyCollectionRule> propRules = new List<PropertyCollectionRule>
             {
-                new ReadOnlyBoundToBooleanRule(PropertyNames.Amount5, PropertyNames.Amount4, false)
+                new ReadOnlyBoundToBooleanRule(PropertyNames.LineColor, PropertyNames.Transparent, false)
             };
 
             return new PropertyCollection(props, propRules);
@@ -82,43 +82,43 @@ namespace JigsawPuzzleEffect
         {
             ControlInfo configUI = CreateDefaultConfigUI(props);
 
-            configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.DisplayName, L10nStrings.Scale);
-            configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.SliderLargeChange, 0.25);
-            configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.SliderSmallChange, 0.05);
-            configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.UpDownIncrement, 0.001);
-            configUI.SetPropertyControlValue(PropertyNames.Amount1, ControlInfoPropertyNames.DecimalPlaces, 3);
-            configUI.SetPropertyControlValue(PropertyNames.Amount2, ControlInfoPropertyNames.DisplayName, L10nStrings.LineWidth);
-            configUI.SetPropertyControlValue(PropertyNames.Amount3, ControlInfoPropertyNames.DisplayName, L10nStrings.Pattern);
-            PropertyControlInfo Amount3Control = configUI.FindControlForPropertyName(PropertyNames.Amount3);
-            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option1, L10nStrings.AltHorVer);
-            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option2, L10nStrings.AltNone);
-            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option3, L10nStrings.AltHor);
-            Amount3Control.SetValueDisplayName(Amount3Options.Amount3Option4, L10nStrings.AltVer);
-            configUI.SetPropertyControlValue(PropertyNames.Amount4, ControlInfoPropertyNames.DisplayName, L10nStrings.LineColor);
-            configUI.SetPropertyControlValue(PropertyNames.Amount4, ControlInfoPropertyNames.Description, L10nStrings.Transparent);
-            configUI.SetPropertyControlValue(PropertyNames.Amount5, ControlInfoPropertyNames.DisplayName, string.Empty);
-            configUI.SetPropertyControlType(PropertyNames.Amount5, PropertyControlType.ColorWheel);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.DisplayName, L10nStrings.Position);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.SliderSmallChangeX, 0.05);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.SliderLargeChangeX, 0.25);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.UpDownIncrementX, 0.001);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.SliderSmallChangeY, 0.05);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.SliderLargeChangeY, 0.25);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.UpDownIncrementY, 0.001);
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.DecimalPlaces, 3);
-            Rectangle selection6 = EnvironmentParameters.GetSelection(EnvironmentParameters.SourceSurface.Bounds).GetBoundsInt();
-            ImageResource imageResource6 = ImageResource.FromImage(EnvironmentParameters.SourceSurface.CreateAliasedBitmap(selection6));
-            configUI.SetPropertyControlValue(PropertyNames.Amount6, ControlInfoPropertyNames.StaticImageUnderlay, imageResource6);
+            configUI.SetPropertyControlValue(PropertyNames.Scale, ControlInfoPropertyNames.DisplayName, L10nStrings.Scale);
+            configUI.SetPropertyControlValue(PropertyNames.Scale, ControlInfoPropertyNames.SliderLargeChange, 0.25);
+            configUI.SetPropertyControlValue(PropertyNames.Scale, ControlInfoPropertyNames.SliderSmallChange, 0.05);
+            configUI.SetPropertyControlValue(PropertyNames.Scale, ControlInfoPropertyNames.UpDownIncrement, 0.001);
+            configUI.SetPropertyControlValue(PropertyNames.Scale, ControlInfoPropertyNames.DecimalPlaces, 3);
+            configUI.SetPropertyControlValue(PropertyNames.LineWidth, ControlInfoPropertyNames.DisplayName, L10nStrings.LineWidth);
+            configUI.SetPropertyControlValue(PropertyNames.Pattern, ControlInfoPropertyNames.DisplayName, L10nStrings.Pattern);
+            PropertyControlInfo patternControl = configUI.FindControlForPropertyName(PropertyNames.Pattern);
+            patternControl.SetValueDisplayName(Pattern.AltHorVer, L10nStrings.AltHorVer);
+            patternControl.SetValueDisplayName(Pattern.AltNone, L10nStrings.AltNone);
+            patternControl.SetValueDisplayName(Pattern.AltHor, L10nStrings.AltHor);
+            patternControl.SetValueDisplayName(Pattern.AltVer, L10nStrings.AltVer);
+            configUI.SetPropertyControlValue(PropertyNames.Transparent, ControlInfoPropertyNames.DisplayName, L10nStrings.LineColor);
+            configUI.SetPropertyControlValue(PropertyNames.Transparent, ControlInfoPropertyNames.Description, L10nStrings.Transparent);
+            configUI.SetPropertyControlValue(PropertyNames.LineColor, ControlInfoPropertyNames.DisplayName, string.Empty);
+            configUI.SetPropertyControlType(PropertyNames.LineColor, PropertyControlType.ColorWheel);
+            configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.DisplayName, L10nStrings.Position);
+            configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.SliderSmallChangeX, 0.05);
+            configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.SliderLargeChangeX, 0.25);
+            configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.UpDownIncrementX, 0.001);
+            configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.SliderSmallChangeY, 0.05);
+            configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.SliderLargeChangeY, 0.25);
+            configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.UpDownIncrementY, 0.001);
+            configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.DecimalPlaces, 3);
+            Rectangle selBounds = EnvironmentParameters.GetSelection(EnvironmentParameters.SourceSurface.Bounds).GetBoundsInt();
+            ImageResource selImage = ImageResource.FromImage(EnvironmentParameters.SourceSurface.CreateAliasedBitmap(selBounds));
+            configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.StaticImageUnderlay, selImage);
 
             return configUI;
         }
 
-        double Amount1 = 1; // [0.2,5] Scale
-        int Amount2 = 2; // [1,10] Line Width
-        byte Amount3 = 0; // Pattern|Pattern A|Pattern B|Pattern C|Pattern D
-        bool Amount4 = true; // [0,1] Transparent
-        ColorBgra Amount5 = ColorBgra.FromBgr(0, 0, 0); // Line Color
-        Pair<double, double> Amount6 = Pair.Create(0.0, 0.0); // Offset
+        double scale = 1; // [0.2,5] Scale
+        int lineWidth = 2; // [1,10] Line Width
+        Pattern pattern = 0; // Pattern|Pattern A|Pattern B|Pattern C|Pattern D
+        bool transparent = true; // [0,1] Transparent
+        ColorBgra lineColor = ColorBgra.FromBgr(0, 0, 0); // Line Color
+        Pair<double, double> offset = Pair.Create(0.0, 0.0); // Offset
 
         readonly BinaryPixelOp normalOp = LayerBlendModeUtil.CreateCompositionOp(LayerBlendMode.Normal);
         Surface puzzleSurface;
@@ -128,22 +128,22 @@ namespace JigsawPuzzleEffect
 
         protected override void OnSetRenderInfo(PropertyBasedEffectConfigToken newToken, RenderArgs dstArgs, RenderArgs srcArgs)
         {
-            Amount1 = newToken.GetProperty<DoubleProperty>(PropertyNames.Amount1).Value;
-            Amount2 = newToken.GetProperty<Int32Property>(PropertyNames.Amount2).Value;
-            Amount3 = (byte)((int)newToken.GetProperty<StaticListChoiceProperty>(PropertyNames.Amount3).Value);
-            Amount4 = newToken.GetProperty<BooleanProperty>(PropertyNames.Amount4).Value;
-            Amount5 = ColorBgra.FromOpaqueInt32(newToken.GetProperty<Int32Property>(PropertyNames.Amount5).Value);
-            Amount6 = newToken.GetProperty<DoubleVectorProperty>(PropertyNames.Amount6).Value;
+            scale = newToken.GetProperty<DoubleProperty>(PropertyNames.Scale).Value;
+            lineWidth = newToken.GetProperty<Int32Property>(PropertyNames.LineWidth).Value;
+            pattern = (Pattern)newToken.GetProperty<StaticListChoiceProperty>(PropertyNames.Pattern).Value;
+            transparent = newToken.GetProperty<BooleanProperty>(PropertyNames.Transparent).Value;
+            lineColor = ColorBgra.FromOpaqueInt32(newToken.GetProperty<Int32Property>(PropertyNames.LineColor).Value);
+            offset = newToken.GetProperty<DoubleVectorProperty>(PropertyNames.Offset).Value;
 
 
             Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
 
-            gridScale = 100 * Amount1;
+            gridScale = 100 * scale;
 
             puzzleRect = new Rectangle
             {
-                X = selection.Left + (int)Math.Round((selection.Width % gridScale) / 2 + (Amount6.First * (selection.Width % gridScale) / 2)),
-                Y = selection.Top + (int)Math.Round((selection.Height % gridScale) / 2 + (Amount6.Second * (selection.Height % gridScale) / 2)),
+                X = selection.Left + (int)Math.Round((selection.Width % gridScale) / 2 + (offset.First * (selection.Width % gridScale) / 2)),
+                Y = selection.Top + (int)Math.Round((selection.Height % gridScale) / 2 + (offset.Second * (selection.Height % gridScale) / 2)),
                 Width = selection.Width - (int)(selection.Width % gridScale),
                 Height = selection.Height - (int)(selection.Height % gridScale)
             };
@@ -153,21 +153,21 @@ namespace JigsawPuzzleEffect
 
             // Puzzle Pattern
             bool horAlt, verAlt;
-            switch (Amount3)
+            switch (pattern)
             {
-                case 0:
+                case Pattern.AltHorVer:
                     horAlt = true;
                     verAlt = true;
                     break;
-                case 1:
+                case Pattern.AltNone:
                     horAlt = false;
                     verAlt = false;
                     break;
-                case 2:
+                case Pattern.AltHor:
                     horAlt = true;
                     verAlt = false;
                     break;
-                case 3:
+                case Pattern.AltVer:
                     horAlt = false;
                     verAlt = true;
                     break;
@@ -183,7 +183,7 @@ namespace JigsawPuzzleEffect
                 puzzleSurface.Clear(ColorBgra.Transparent);
 
             using (Graphics puzzleGraphics = new RenderArgs(puzzleSurface).Graphics)
-            using (Pen puzzlePen = new Pen(Amount5, Amount2))
+            using (Pen puzzlePen = new Pen(lineColor, lineWidth))
             {
                 puzzleGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
@@ -289,41 +289,41 @@ namespace JigsawPuzzleEffect
             switch (apexLocation)
             {
                 case Apex.Right:
-                    points[0] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(0 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[1] = new PointF((float)(99 * Amount1 + gridScale * i + puzzleRect.X), (float)(40 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[2] = new PointF((float)(121 * Amount1 + gridScale * i + puzzleRect.X), (float)(36 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[3] = new PointF((float)(133 * Amount1 + gridScale * i + puzzleRect.X), (float)(50 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[4] = new PointF((float)(121 * Amount1 + gridScale * i + puzzleRect.X), (float)(64 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[5] = new PointF((float)(99 * Amount1 + gridScale * i + puzzleRect.X), (float)(60 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(100 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[0] = new PointF((float)(100 * scale + gridScale * i + puzzleRect.X), (float)(0 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[1] = new PointF((float)(99 * scale + gridScale * i + puzzleRect.X), (float)(40 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[2] = new PointF((float)(121 * scale + gridScale * i + puzzleRect.X), (float)(36 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[3] = new PointF((float)(133 * scale + gridScale * i + puzzleRect.X), (float)(50 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[4] = new PointF((float)(121 * scale + gridScale * i + puzzleRect.X), (float)(64 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[5] = new PointF((float)(99 * scale + gridScale * i + puzzleRect.X), (float)(60 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[6] = new PointF((float)(100 * scale + gridScale * i + puzzleRect.X), (float)(100 * scale + gridScale * i2 + puzzleRect.Y));
                     break;
                 case Apex.Down:
-                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(99 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(121 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(133 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(121 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(99 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[0] = new PointF((float)(0 * scale + gridScale * i2 + puzzleRect.X), (float)(100 * scale + gridScale * i + puzzleRect.Y));
+                    points[1] = new PointF((float)(40 * scale + gridScale * i2 + puzzleRect.X), (float)(99 * scale + gridScale * i + puzzleRect.Y));
+                    points[2] = new PointF((float)(36 * scale + gridScale * i2 + puzzleRect.X), (float)(121 * scale + gridScale * i + puzzleRect.Y));
+                    points[3] = new PointF((float)(50 * scale + gridScale * i2 + puzzleRect.X), (float)(133 * scale + gridScale * i + puzzleRect.Y));
+                    points[4] = new PointF((float)(64 * scale + gridScale * i2 + puzzleRect.X), (float)(121 * scale + gridScale * i + puzzleRect.Y));
+                    points[5] = new PointF((float)(60 * scale + gridScale * i2 + puzzleRect.X), (float)(99 * scale + gridScale * i + puzzleRect.Y));
+                    points[6] = new PointF((float)(100 * scale + gridScale * i2 + puzzleRect.X), (float)(100 * scale + gridScale * i + puzzleRect.Y));
                     break;
                 case Apex.Left:
-                    points[0] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(0 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[1] = new PointF((float)(101 * Amount1 + gridScale * i + puzzleRect.X), (float)(40 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[2] = new PointF((float)(79 * Amount1 + gridScale * i + puzzleRect.X), (float)(36 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[3] = new PointF((float)(67 * Amount1 + gridScale * i + puzzleRect.X), (float)(50 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[4] = new PointF((float)(79 * Amount1 + gridScale * i + puzzleRect.X), (float)(64 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[5] = new PointF((float)(101 * Amount1 + gridScale * i + puzzleRect.X), (float)(60 * Amount1 + gridScale * i2 + puzzleRect.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i + puzzleRect.X), (float)(100 * Amount1 + gridScale * i2 + puzzleRect.Y));
+                    points[0] = new PointF((float)(100 * scale + gridScale * i + puzzleRect.X), (float)(0 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[1] = new PointF((float)(101 * scale + gridScale * i + puzzleRect.X), (float)(40 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[2] = new PointF((float)(79 * scale + gridScale * i + puzzleRect.X), (float)(36 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[3] = new PointF((float)(67 * scale + gridScale * i + puzzleRect.X), (float)(50 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[4] = new PointF((float)(79 * scale + gridScale * i + puzzleRect.X), (float)(64 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[5] = new PointF((float)(101 * scale + gridScale * i + puzzleRect.X), (float)(60 * scale + gridScale * i2 + puzzleRect.Y));
+                    points[6] = new PointF((float)(100 * scale + gridScale * i + puzzleRect.X), (float)(100 * scale + gridScale * i2 + puzzleRect.Y));
                     break;
                 case Apex.Up:
                 default:
-                    points[0] = new PointF((float)(0 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[1] = new PointF((float)(40 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(101 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[2] = new PointF((float)(36 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(79 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[3] = new PointF((float)(50 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(67 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[4] = new PointF((float)(64 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(79 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[5] = new PointF((float)(60 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(101 * Amount1 + gridScale * i + puzzleRect.Y));
-                    points[6] = new PointF((float)(100 * Amount1 + gridScale * i2 + puzzleRect.X), (float)(100 * Amount1 + gridScale * i + puzzleRect.Y));
+                    points[0] = new PointF((float)(0 * scale + gridScale * i2 + puzzleRect.X), (float)(100 * scale + gridScale * i + puzzleRect.Y));
+                    points[1] = new PointF((float)(40 * scale + gridScale * i2 + puzzleRect.X), (float)(101 * scale + gridScale * i + puzzleRect.Y));
+                    points[2] = new PointF((float)(36 * scale + gridScale * i2 + puzzleRect.X), (float)(79 * scale + gridScale * i + puzzleRect.Y));
+                    points[3] = new PointF((float)(50 * scale + gridScale * i2 + puzzleRect.X), (float)(67 * scale + gridScale * i + puzzleRect.Y));
+                    points[4] = new PointF((float)(64 * scale + gridScale * i2 + puzzleRect.X), (float)(79 * scale + gridScale * i + puzzleRect.Y));
+                    points[5] = new PointF((float)(60 * scale + gridScale * i2 + puzzleRect.X), (float)(101 * scale + gridScale * i + puzzleRect.Y));
+                    points[6] = new PointF((float)(100 * scale + gridScale * i2 + puzzleRect.X), (float)(100 * scale + gridScale * i + puzzleRect.Y));
                     break;
             }
 
@@ -344,7 +344,7 @@ namespace JigsawPuzzleEffect
                         currentPixel = src[x, y];
                         currentPixel.A = 0; // Delete pixels outside the puzzle border
                     }
-                    else if (Amount4)
+                    else if (transparent)
                     {
                         currentPixel = src[x, y];
                         currentPixel.A = Int32Util.ClampToByte(byte.MaxValue - puzzleSurface[x, y].A);
