@@ -1,11 +1,11 @@
-﻿using System;
-using System.Drawing;
-using System.Reflection;
-using System.Collections.Generic;
-using PaintDotNet;
+﻿using PaintDotNet;
 using PaintDotNet.Effects;
 using PaintDotNet.IndirectUI;
 using PaintDotNet.PropertySystem;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Reflection;
 
 namespace JigsawPuzzleEffect
 {
@@ -27,7 +27,7 @@ namespace JigsawPuzzleEffect
         private static readonly Image StaticIcon = new Bitmap(typeof(JigsawPuzzleEffectPlugin), "JigsawPuzzle.png");
 
         public JigsawPuzzleEffectPlugin()
-            : base(L10nStrings.EffectName, StaticIcon, SubmenuNames.Render, EffectFlags.Configurable)
+            : base(L10nStrings.EffectName, StaticIcon, SubmenuNames.Render, new EffectOptions { Flags = EffectFlags.Configurable })
         {
         }
 
@@ -60,17 +60,17 @@ namespace JigsawPuzzleEffect
 
         protected override PropertyCollection OnCreatePropertyCollection()
         {
-            List<Property> props = new List<Property>
+            IEnumerable<Property> props = new Property[]
             {
                 new DoubleProperty(PropertyNames.Scale, 1, 0.2, 10),
                 new Int32Property(PropertyNames.LineWidth, 2, 1, 10),
                 StaticListChoiceProperty.CreateForEnum<Pattern>(PropertyNames.Pattern, 0, false),
                 new BooleanProperty(PropertyNames.Transparent, true),
-                new Int32Property(PropertyNames.LineColor, ColorBgra.ToOpaqueInt32(ColorBgra.FromBgra(EnvironmentParameters.PrimaryColor.B, EnvironmentParameters.PrimaryColor.G, EnvironmentParameters.PrimaryColor.R, 255)), 0, 0xffffff),
+                new Int32Property(PropertyNames.LineColor, ColorBgra.ToOpaqueInt32(EnvironmentParameters.PrimaryColor.NewAlpha(byte.MaxValue)), 0, 0xffffff),
                 new DoubleVectorProperty(PropertyNames.Offset, Pair.Create(0.0, 0.0), Pair.Create(-1.0, -1.0), Pair.Create(+1.0, +1.0))
             };
 
-            List<PropertyCollectionRule> propRules = new List<PropertyCollectionRule>
+            IEnumerable<PropertyCollectionRule> propRules = new PropertyCollectionRule[]
             {
                 new ReadOnlyBoundToBooleanRule(PropertyNames.LineColor, PropertyNames.Transparent, false)
             };
@@ -106,7 +106,7 @@ namespace JigsawPuzzleEffect
             configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.SliderLargeChangeY, 0.25);
             configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.UpDownIncrementY, 0.001);
             configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.DecimalPlaces, 3);
-            Rectangle selBounds = EnvironmentParameters.GetSelection(EnvironmentParameters.SourceSurface.Bounds).GetBoundsInt();
+            Rectangle selBounds = EnvironmentParameters.SelectionBounds;
             ImageResource selImage = ImageResource.FromImage(EnvironmentParameters.SourceSurface.CreateAliasedBitmap(selBounds));
             configUI.SetPropertyControlValue(PropertyNames.Offset, ControlInfoPropertyNames.StaticImageUnderlay, selImage);
 
@@ -136,7 +136,7 @@ namespace JigsawPuzzleEffect
             offset = newToken.GetProperty<DoubleVectorProperty>(PropertyNames.Offset).Value;
 
 
-            Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
+            Rectangle selection = EnvironmentParameters.SelectionBounds;
 
             gridScale = 100 * scale;
 
@@ -197,14 +197,8 @@ namespace JigsawPuzzleEffect
                     {
                         for (int i2 = 0; i2 < verLoops; i2++)
                         {
-                            if (i2 % 2 != 0) // upper apex on odds
-                            {
-                                curvePoints = getCurvePoints(Apex.Up, i, i2); // upper apex
-                            }
-                            else
-                            {
-                                curvePoints = getCurvePoints(Apex.Down, i, i2); // lower apex
-                            }
+                            Apex apex = (i2 % 2 != 0) ? Apex.Up : Apex.Down;
+                            curvePoints = getCurvePoints(apex, i, i2);
 
                             puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
                         }
@@ -213,14 +207,8 @@ namespace JigsawPuzzleEffect
                     {
                         for (int i2 = 0; i2 < verLoops; i2++)
                         {
-                            if (i2 % 2 == 0) // upper apex on evens
-                            {
-                                curvePoints = getCurvePoints(Apex.Up, i, i2); // upper apex
-                            }
-                            else
-                            {
-                                curvePoints = getCurvePoints(Apex.Down, i, i2); // lower apex
-                            }
+                            Apex apex = (i2 % 2 == 0) ? Apex.Up : Apex.Down;
+                            curvePoints = getCurvePoints(apex, i, i2);
 
                             puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
                         }
@@ -236,14 +224,8 @@ namespace JigsawPuzzleEffect
                     {
                         for (int i2 = 0; i2 < horLoops; i2++)
                         {
-                            if (i2 % 2 != 0) // right apex on odds
-                            {
-                                curvePoints = getCurvePoints(Apex.Right, i, i2); // right apex
-                            }
-                            else
-                            {
-                                curvePoints = getCurvePoints(Apex.Left, i, i2); // left apex
-                            }
+                            Apex apex = (i2 % 2 != 0) ? Apex.Right : Apex.Left;
+                            curvePoints = getCurvePoints(apex, i, i2);
 
                             puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
                         }
@@ -252,14 +234,8 @@ namespace JigsawPuzzleEffect
                     {
                         for (int i2 = 0; i2 < horLoops; i2++)
                         {
-                            if (i2 % 2 == 0) // right apex on evens
-                            {
-                                curvePoints = getCurvePoints(Apex.Right, i, i2); // right apex
-                            }
-                            else
-                            {
-                                curvePoints = getCurvePoints(Apex.Left, i, i2); // left apex
-                            }
+                            Apex apex = (i2 % 2 == 0) ? Apex.Right : Apex.Left;
+                            curvePoints = getCurvePoints(apex, i, i2);
 
                             puzzleGraphics.DrawCurve(puzzlePen, curvePoints);
                         }
