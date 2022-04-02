@@ -180,7 +180,7 @@ namespace JigsawPuzzleEffect
             if (puzzleSurface == null)
                 puzzleSurface = new Surface(srcArgs.Surface.Size);
             else
-                puzzleSurface.Clear(ColorBgra.Transparent);
+                puzzleSurface.Fill(ColorBgra.Transparent);
 
             using (Graphics puzzleGraphics = new RenderArgs(puzzleSurface).Graphics)
             using (Pen puzzlePen = new Pen(lineColor, lineWidth))
